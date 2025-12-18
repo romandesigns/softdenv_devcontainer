@@ -21,7 +21,7 @@
 				"github.copilot.nextEditSuggestions.enabled": true,
 				// UI settings
 				"workbench.iconTheme": "symbols",
-				"workbench.colorTheme": "Bearded Theme Arc Eggplant",
+				"workbench.colorTheme": "Best Themes - Horizon",
 				// Behavior settings
 				"editor.formatOnPaste": true,
 				"editor.formatOnSave": true,
