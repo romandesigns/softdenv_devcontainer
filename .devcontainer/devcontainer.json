@@ -1,0 +1,60 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/ubuntu
+{
+	"name": "Ubuntu",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"image": "mcr.microsoft.com/devcontainers/base:noble",
+	"features": {
+		"ghcr.io/shyim/devcontainers-features/bun:0": {},
+		"ghcr.io/devcontainers/features/node:1": {}
+	},
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	"forwardPorts": [
+		3000
+	],
+	"customizations": {
+		"vscode": {
+			"settings": {
+				// Feature settings
+				"github.copilot.nextEditSuggestions.enabled": true,
+				// UI settings
+				"workbench.iconTheme": "symbols",
+				"workbench.colorTheme": "Bearded Theme Arc Eggplant",
+				// Behavior settings
+				"editor.formatOnPaste": true,
+				"editor.formatOnSave": true,
+				// Typography settings
+				"editor.fontSize": 11,
+				"terminal.integrated.fontSize": 11,
+				"editor.lineHeight": 1.9,
+				"terminal.integrated.lineHeight": 1.7,
+				"terminal.integrated.fontFamily": "CaskaydiaCove Nerd Font Mono, CaskaydiaCove Nerd Font, monospace",
+				"terminal.integrated.fontLigatures.enabled": true,
+				"editor.fontLigatures": true,
+				"editor.fontFamily": "CaskaydiaCove Nerd Font Mono, CaskaydiaCove Nerd Font, monospace, Fira Code, Consolas, 'Courier New', monospace",
+				"editor.fontWeight": "400",
+				"terminal.integrated.fontWeight": "400",
+				"terminal.integrated.gpuAcceleration": "on"
+			},
+			"extensions": [
+				"ms-azuretools.vscode-containers",
+				"oven.bun-vscode",
+				"BeardedBear.beardedtheme",
+				"BeardedBear.beardedicons",
+				"miguelsolorio.symbols",
+				"WallabyJs.console-ninja",
+				"aaron-bond.better-comments",
+				"naumovs.color-highlight",
+				"mikestead.dotenv"
+			]
+		}
+	},
+	// Use 'postCreateCommand' to run commands after the container is created.
+	"postCreateCommand": "bash ${containerWorkspaceFolder}/.devcontainer/installations.sh",
+	// Configure tool-specific properties.
+	// "customizations": {},
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	"remoteUser": "vscode"
+}
