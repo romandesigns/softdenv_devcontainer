@@ -1,0 +1,7 @@
+{
+    "files.exclude": {
+        ".devcontainer": true,
+        ".github": true,
+        ".gitignore": true,
+    }
+}
