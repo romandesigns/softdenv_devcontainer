@@ -25,6 +25,7 @@
 				// Behavior settings
 				"editor.formatOnPaste": true,
 				"editor.formatOnSave": true,
+				"editor.defaultFormatter": "esbenp.prettier-vscode",
 				// Typography settings
 				"editor.fontSize": 11,
 				"terminal.integrated.fontSize": 11,
@@ -47,7 +48,12 @@
 				"WallabyJs.console-ninja",
 				"aaron-bond.better-comments",
 				"naumovs.color-highlight",
-				"mikestead.dotenv"
+				"mikestead.dotenv",
+				"pomdtr.excalidraw-editor",
+				"bradlc.vscode-tailwindcss",
+				"oouo-diogo-perdigao.docthis",
+				"esbenp.prettier-vscode",
+				"EraserLabs.eraserlabs"
 			]
 		}
 	},
