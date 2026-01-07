@@ -47,7 +47,8 @@
 				"WallabyJs.console-ninja",
 				"aaron-bond.better-comments",
 				"naumovs.color-highlight",
-				"mikestead.dotenv"
+				"mikestead.dotenv",
+				"dsznajder.es7-react-js-snippets"
 			]
 		}
 	},
