@@ -16,9 +16,7 @@
       "version": "3.12"
     }
   },
-  "forwardPorts": [
-    3000
-  ],
+  "forwardPorts": [3000],
   "portsAttributes": {
     "3000": {
       "label": "Web",
@@ -30,7 +28,7 @@
       "settings": {
         "github.copilot.nextEditSuggestions.enabled": true,
         "workbench.iconTheme": "symbols",
-        "workbench.colorTheme": "Best Themes - Horizon",
+        "workbench.colorTheme": "Bearded Theme Anthracite",
         "editor.formatOnPaste": true,
         "editor.formatOnSave": true,
         "editor.defaultFormatter": "esbenp.prettier-vscode",
