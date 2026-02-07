@@ -65,6 +65,5 @@
     }
   },
   "postCreateCommand": "chmod +x .devcontainer/installations.sh && bash .devcontainer/installations.sh",
-  "remoteUser": "vscode",
-  "updateRemoteUserUID": true
+  "remoteUser": "vscode"
 }
