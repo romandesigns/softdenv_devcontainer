@@ -1,25 +1,36 @@
-// For format details, see https://aka.ms/devcontainer.json. For config options, see the
-// README at: https://github.com/devcontainers/templates/tree/main/src/ubuntu
 {
-  "name": "wavystack-environment",
-  // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-  "image": "mcr.microsoft.com/devcontainers/base:noble",
-  "features": {
-    "ghcr.io/shyim/devcontainers-features/bun:0": {},
-    "ghcr.io/devcontainers/features/node:1": {},
-    "ghcr.io/devcontainers/features/python:1": {}
+  "name": "wavystack-devenv",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "."
   },
-  // Features to add to the dev container. More info: https://containers.dev/features.
-  "forwardPorts": [3000],
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "features": {
+    "ghcr.io/shyim/devcontainers-features/bun:0": {
+      "version": "1.1.0"
+    },
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20"
+    },
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.12"
+    }
+  },
+  "forwardPorts": [
+    3000
+  ],
+  "portsAttributes": {
+    "3000": {
+      "label": "Web",
+      "onAutoForward": "openBrowser"
+    }
+  },
   "customizations": {
     "vscode": {
       "settings": {
-        // Feature settings
         "github.copilot.nextEditSuggestions.enabled": true,
-        // UI settings
         "workbench.iconTheme": "symbols",
         "workbench.colorTheme": "Best Themes - Horizon",
-        // Behavior settings
         "editor.formatOnPaste": true,
         "editor.formatOnSave": true,
         "editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -29,7 +40,6 @@
         "editor.fontWeight": "400",
         "editor.fontSize": 11,
         "editor.lineHeight": 1.9,
-        // Typography settings
         "terminal.integrated.fontSize": 11,
         "terminal.integrated.lineHeight": 1.7,
         "terminal.integrated.fontFamily": "CaskaydiaCove Nerd Font Mono, CaskaydiaCove Nerd Font, monospace",
@@ -56,10 +66,7 @@
       ]
     }
   },
-  // Use 'postCreateCommand' to run commands after the container is created.
-  "postCreateCommand": "bash ${containerWorkspaceFolder}/.devcontainer/installations.sh",
-  // Configure tool-specific properties.
-  // "customizations": {},
-  // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-  "remoteUser": "vscode"
+  "postCreateCommand": "chmod +x .devcontainer/installations.sh && bash .devcontainer/installations.sh",
+  "remoteUser": "vscode",
+  "updateRemoteUserUID": true
 }
