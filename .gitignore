@@ -1,5 +1,6 @@
-desktop
-mobile
-playground
-utils
-web
+# Ignore project folders inside dev environment
+/desktop/
+/mobile/
+/playground/
+/utils/
+/web/

@@ -5,7 +5,7 @@ installation_type="custom installations"
 
 # Font details
 FONT_NAME="CascadiaCode Nerd Font"
-FONT_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/CascadiaCode.zip"
+FONT_URL="https://github.com/ryanoasis/nerd-fonts/releases/latest/download/CascadiaCode.zip"
 FONT_DIR="/usr/local/share/fonts/cascadia-code"
 TMP_DIR="/tmp/fonts"
 
@@ -18,21 +18,41 @@ echo "📦 Installing required packages..."
 
 # --------------------------------------
 # Fix: Yarn APT repo EXPKEYSIG issue
-# (Disable/remove Yarn repo so apt-get update can't fail)
 # --------------------------------------
 if [ -f /etc/apt/sources.list.d/yarn.list ]; then
   echo "🧹 Removing Yarn APT repo (expired signing key)..."
   sudo rm -f /etc/apt/sources.list.d/yarn.list
 fi
 
-# If a stale keyring exists, remove it too (optional but clean)
 if [ -f /usr/share/keyrings/yarn-archive-keyring.gpg ]; then
-  echo "🧹 Removing Yarn APT keyring (optional cleanup)..."
+  echo "🧹 Removing Yarn APT keyring..."
   sudo rm -f /usr/share/keyrings/yarn-archive-keyring.gpg
 fi
 
 sudo apt-get update
-sudo apt-get install -y curl unzip fontconfig ca-certificates
+sudo apt-get install -y curl unzip fontconfig ca-certificates build-essential pkg-config libssl-dev
+
+# --------------------------------------
+# Rust Installation (Always Latest Stable)
+# --------------------------------------
+
+echo "🦀 Installing latest Rust (stable)..."
+
+if ! command -v rustup >/dev/null 2>&1; then
+  curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain stable
+else
+  echo "🔄 Rustup already installed. Updating toolchain..."
+  rustup self update
+  rustup update stable
+  rustup default stable
+fi
+
+# Load cargo into PATH for current session
+source "$HOME/.cargo/env"
+
+echo "🦀 Rust version:"
+rustc --version
+cargo --version
 
 # --------------------------------------
 # Fonts Installation
@@ -45,16 +65,14 @@ sudo mkdir -p "$FONT_DIR"
 curl -L "$FONT_URL" -o "$TMP_DIR/cascadia.zip"
 unzip -o "$TMP_DIR/cascadia.zip" -d "$TMP_DIR"
 
-# Move TTFs into system font dir
 sudo find "$TMP_DIR" -name "*.ttf" -exec mv {} "$FONT_DIR" \;
 
-# Rebuild font cache
 sudo fc-cache -fv
 
 echo "✅ $FONT_NAME installed successfully"
 
 # --------------------------------------
-# Global Git identity (container-wide)
+# Global Git identity
 # --------------------------------------
 
 echo "🌍 Setting global Git identity..."
@@ -73,4 +91,4 @@ if [ -d "/home/vscode/.ssh" ]; then
   chmod 644 /home/vscode/.ssh/id_ed25519.pub 2>/dev/null || true
 fi
 
-echo "🏁 Finishing $installation_type..."
+echo "🏁 Finished $installation_type."
