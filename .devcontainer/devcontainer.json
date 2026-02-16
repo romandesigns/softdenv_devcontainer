@@ -64,6 +64,12 @@
       ]
     }
   },
-  "postCreateCommand": "chmod +x .devcontainer/installations.sh && bash .devcontainer/installations.sh",
+  "remoteEnv": {
+    "SSH_AUTH_SOCK": "/ssh-agent"
+  },
+  "mounts": [
+    "source=/home/softdev/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached"
+  ],
+  "postCreateCommand": "bash .devcontainer/installations.sh",
   "remoteUser": "vscode"
 }

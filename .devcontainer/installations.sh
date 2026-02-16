@@ -62,4 +62,15 @@ git config --global user.name "$GIT_NAME"
 git config --global user.email "$GIT_EMAIL"
 git config --global init.defaultBranch main
 
+# --------------------------------------
+# SSH perms (for mounted ~/.ssh)
+# --------------------------------------
+
+echo "🔐 Setting SSH directory permissions..."
+if [ -d "/home/vscode/.ssh" ]; then
+  chmod 700 /home/vscode/.ssh || true
+  chmod 600 /home/vscode/.ssh/id_ed25519 2>/dev/null || true
+  chmod 644 /home/vscode/.ssh/id_ed25519.pub 2>/dev/null || true
+fi
+
 echo "🏁 Finishing $installation_type..."
