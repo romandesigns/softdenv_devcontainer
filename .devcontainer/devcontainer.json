@@ -16,7 +16,9 @@
       "version": "3.12"
     }
   },
-  "forwardPorts": [3000],
+  "forwardPorts": [
+    3000
+  ],
   "portsAttributes": {
     "3000": {
       "label": "Web",
@@ -27,7 +29,7 @@
     "vscode": {
       "settings": {
         "github.copilot.nextEditSuggestions.enabled": true,
-        "workbench.iconTheme": "symbols",
+        "workbench.iconTheme": "Monokai Pro (Filter Machine) Icons",
         "workbench.colorTheme": "Bearded Theme Anthracite",
         "editor.formatOnPaste": true,
         "editor.formatOnSave": true,
@@ -60,7 +62,9 @@
         "oouo-diogo-perdigao.docthis",
         "esbenp.prettier-vscode",
         "EraserLabs.eraserlabs",
-        "dsznajder.es7-react-js-snippets"
+        "dsznajder.es7-react-js-snippets",
+        "monokai.theme-monokai-pro-vscode",
+        "whizkydee.material-palenight-theme"
       ]
     }
   },
