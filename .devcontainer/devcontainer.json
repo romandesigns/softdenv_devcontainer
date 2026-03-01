@@ -16,9 +16,7 @@
       "version": "3.12"
     }
   },
-  "forwardPorts": [
-    3000
-  ],
+  "forwardPorts": [3000],
   "portsAttributes": {
     "3000": {
       "label": "Web",
@@ -38,8 +36,8 @@
         "editor.fontLigatures": true,
         "editor.fontFamily": "CaskaydiaCove Nerd Font Mono, CaskaydiaCove Nerd Font, monospace, Fira Code, Consolas, 'Courier New', monospace",
         "editor.fontWeight": "400",
-        "editor.fontSize": 11,
-        "editor.lineHeight": 1.9,
+        "editor.fontSize": 10,
+        "editor.lineHeight": 2,
         "terminal.integrated.fontSize": 11,
         "terminal.integrated.lineHeight": 1.7,
         "terminal.integrated.fontFamily": "CaskaydiaCove Nerd Font Mono, CaskaydiaCove Nerd Font, monospace",
@@ -65,7 +63,8 @@
         "dsznajder.es7-react-js-snippets",
         "monokai.theme-monokai-pro-vscode",
         "whizkydee.material-palenight-theme",
-        "donjayamanne.python-extension-pack"
+        "donjayamanne.python-extension-pack",
+        "enkia.tokyo-night"
       ]
     }
   },
