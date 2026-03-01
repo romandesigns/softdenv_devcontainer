@@ -37,7 +37,7 @@
         "editor.fontFamily": "CaskaydiaCove Nerd Font Mono, CaskaydiaCove Nerd Font, monospace, Fira Code, Consolas, 'Courier New', monospace",
         "editor.fontWeight": "400",
         "editor.fontSize": 10,
-        "editor.lineHeight": 2,
+        "editor.lineHeight": 2.5,
         "terminal.integrated.fontSize": 11,
         "terminal.integrated.lineHeight": 1.7,
         "terminal.integrated.fontFamily": "CaskaydiaCove Nerd Font Mono, CaskaydiaCove Nerd Font, monospace",

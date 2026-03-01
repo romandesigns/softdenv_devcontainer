@@ -29,13 +29,78 @@ if [ -f /usr/share/keyrings/yarn-archive-keyring.gpg ]; then
   sudo rm -f /usr/share/keyrings/yarn-archive-keyring.gpg
 fi
 
+# --------------------------------------
+# Base packages
+# --------------------------------------
 sudo apt-get update
-sudo apt-get install -y curl unzip fontconfig ca-certificates build-essential pkg-config libssl-dev
+sudo apt-get install -y \
+  curl unzip fontconfig ca-certificates \
+  build-essential pkg-config libssl-dev \
+  python3
+
+# --------------------------------------
+# Media Processing Toolkit (Image/Video/Audio)
+# --------------------------------------
+echo "🎬 Installing media processing tools (image/video/audio)..."
+
+sudo apt-get install -y \
+  ffmpeg \
+  imagemagick \
+  libvips-tools libvips-dev \
+  exiftool \
+  mediainfo \
+  sox \
+  lame \
+  flac \
+  opus-tools \
+  vorbis-tools \
+  webp \
+  pngquant \
+  jpegoptim \
+  gifsicle \
+  ghostscript
+
+echo "✅ Media tools installed:"
+ffmpeg -version | head -n 1 || true
+convert -version | head -n 1 || true
+vips --version || true
+sox --version || true
+exiftool -ver || true
+mediainfo --Version 2>/dev/null | head -n 1 || true
+
+# --------------------------------------
+# Node.js + npm (required for sharp-cli)
+# --------------------------------------
+echo "🟢 Ensuring Node.js + npm are installed..."
+
+if ! command -v npm >/dev/null 2>&1; then
+  echo "📦 npm not found. Installing Node.js LTS (v20)..."
+  # NodeSource setup for Debian/Ubuntu
+  curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+  sudo apt-get install -y nodejs
+else
+  echo "✅ npm found: $(npm -v)"
+fi
+
+echo "✅ Node version: $(node -v 2>/dev/null || echo 'node not found')"
+echo "✅ npm version: $(npm -v 2>/dev/null || echo 'npm not found')"
+
+# --------------------------------------
+# Sharp (Node image processing)
+# --------------------------------------
+echo "🖼️ Setting up Sharp (Node.js image processing)..."
+
+# sharp-cli is optional but very useful for quick tests.
+# Don't fail the whole container build if global install fails.
+if command -v npm >/dev/null 2>&1; then
+  sudo npm install -g sharp-cli || true
+  echo "✅ sharp-cli version:"
+  sharp --version 2>/dev/null || echo "⚠️ sharp-cli not available (global install may have been skipped)."
+fi
 
 # --------------------------------------
 # Rust Installation (Always Latest Stable)
 # --------------------------------------
-
 echo "🦀 Installing latest Rust (stable)..."
 
 if ! command -v rustup >/dev/null 2>&1; then
@@ -57,7 +122,6 @@ cargo --version
 # --------------------------------------
 # Fonts Installation
 # --------------------------------------
-
 echo "🔤 Installing $FONT_NAME..."
 mkdir -p "$TMP_DIR"
 sudo mkdir -p "$FONT_DIR"
@@ -68,13 +132,11 @@ unzip -o "$TMP_DIR/cascadia.zip" -d "$TMP_DIR"
 sudo find "$TMP_DIR" -name "*.ttf" -exec mv {} "$FONT_DIR" \;
 
 sudo fc-cache -fv
-
 echo "✅ $FONT_NAME installed successfully"
 
 # --------------------------------------
 # Global Git identity
 # --------------------------------------
-
 echo "🌍 Setting global Git identity..."
 git config --global user.name "$GIT_NAME"
 git config --global user.email "$GIT_EMAIL"
@@ -83,7 +145,6 @@ git config --global init.defaultBranch main
 # --------------------------------------
 # SSH perms (for mounted ~/.ssh)
 # --------------------------------------
-
 echo "🔐 Setting SSH directory permissions..."
 if [ -d "/home/vscode/.ssh" ]; then
   chmod 700 /home/vscode/.ssh || true
