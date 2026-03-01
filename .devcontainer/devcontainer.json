@@ -64,7 +64,8 @@
         "EraserLabs.eraserlabs",
         "dsznajder.es7-react-js-snippets",
         "monokai.theme-monokai-pro-vscode",
-        "whizkydee.material-palenight-theme"
+        "whizkydee.material-palenight-theme",
+        "donjayamanne.python-extension-pack"
       ]
     }
   },
