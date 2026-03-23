@@ -64,7 +64,8 @@
         "monokai.theme-monokai-pro-vscode",
         "whizkydee.material-palenight-theme",
         "donjayamanne.python-extension-pack",
-        "enkia.tokyo-night"
+        "enkia.tokyo-night",
+        "bmewburn.vscode-intelephense-client"
       ]
     }
   },
