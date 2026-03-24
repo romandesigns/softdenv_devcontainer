@@ -36,7 +36,16 @@ sudo apt-get update
 sudo apt-get install -y \
   curl unzip fontconfig ca-certificates \
   build-essential pkg-config libssl-dev \
-  python3
+  python3 python3-pip \
+  jq zip xz-utils file \
+  adb openjdk-17-jdk
+
+# --------------------------------------
+# Watchman
+# --------------------------------------
+echo "👀 Installing Watchman..."
+sudo apt-get install -y watchman || true
+watchman --version || true
 
 # --------------------------------------
 # Media Processing Toolkit (Image/Video/Audio)
@@ -69,13 +78,24 @@ exiftool -ver || true
 mediainfo --Version 2>/dev/null | head -n 1 || true
 
 # --------------------------------------
-# Node.js + npm (required for sharp-cli)
+# Desktop app dependencies
+# --------------------------------------
+echo "🖥️ Installing desktop app build dependencies..."
+sudo apt-get install -y \
+  libgtk-3-dev \
+  libwebkit2gtk-4.1-dev \
+  libayatana-appindicator3-dev \
+  librsvg2-dev \
+  patchelf \
+  libfuse2
+
+# --------------------------------------
+# Node.js + npm
 # --------------------------------------
 echo "🟢 Ensuring Node.js + npm are installed..."
 
 if ! command -v npm >/dev/null 2>&1; then
   echo "📦 npm not found. Installing Node.js LTS (v20)..."
-  # NodeSource setup for Debian/Ubuntu
   curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
   sudo apt-get install -y nodejs
 else
@@ -86,17 +106,34 @@ echo "✅ Node version: $(node -v 2>/dev/null || echo 'node not found')"
 echo "✅ npm version: $(npm -v 2>/dev/null || echo 'npm not found')"
 
 # --------------------------------------
-# Sharp (Node image processing)
+# Global JS tooling
 # --------------------------------------
-echo "🖼️ Setting up Sharp (Node.js image processing)..."
+echo "🧰 Installing useful global JS tooling..."
 
-# sharp-cli is optional but very useful for quick tests.
-# Don't fail the whole container build if global install fails.
 if command -v npm >/dev/null 2>&1; then
-  sudo npm install -g sharp-cli || true
-  echo "✅ sharp-cli version:"
-  sharp --version 2>/dev/null || echo "⚠️ sharp-cli not available (global install may have been skipped)."
+  npm install -g \
+    sharp-cli \
+    expo \
+    eas-cli \
+    @expo/ngrok \
+    npm-check-updates \
+    concurrently \
+    typescript
+else
+  echo "⚠️ npm not found in current PATH. Skipping global JS tooling install."
 fi
+
+echo "✅ Expo version:"
+expo --version || true
+
+echo "✅ EAS version:"
+eas --version || true
+
+# --------------------------------------
+# Bun global helpers
+# --------------------------------------
+echo "🥟 Installing Bun global helpers..."
+bun add -g @biomejs/biome || true
 
 # --------------------------------------
 # Rust Installation (Always Latest Stable)
@@ -112,12 +149,28 @@ else
   rustup default stable
 fi
 
-# Load cargo into PATH for current session
 source "$HOME/.cargo/env"
+
+rustup component add rustfmt clippy || true
 
 echo "🦀 Rust version:"
 rustc --version
 cargo --version
+
+# --------------------------------------
+# Tauri CLI
+# --------------------------------------
+echo "🚀 Installing Tauri CLI..."
+cargo install tauri-cli --locked || true
+cargo tauri --version || true
+
+# --------------------------------------
+# Android / Java checks
+# --------------------------------------
+echo "📱 Android / Java tooling versions:"
+java -version || true
+javac -version || true
+adb version || true
 
 # --------------------------------------
 # Fonts Installation
@@ -151,5 +204,45 @@ if [ -d "/home/vscode/.ssh" ]; then
   chmod 600 /home/vscode/.ssh/id_ed25519 2>/dev/null || true
   chmod 644 /home/vscode/.ssh/id_ed25519.pub 2>/dev/null || true
 fi
+
+# --------------------------------------
+# Shell profile helpers
+# --------------------------------------
+echo "🧩 Adding developer environment exports..."
+
+PROFILE_FILE="$HOME/.bashrc"
+
+if ! grep -q 'ANDROID_HOME=' "$PROFILE_FILE"; then
+  cat <<'EOF' >> "$PROFILE_FILE"
+
+# Android / mobile development
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+export ANDROID_HOME=$HOME/Android/Sdk
+export ANDROID_SDK_ROOT=$ANDROID_HOME
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
+export PATH=$PATH:$ANDROID_HOME/emulator
+
+# Rust / Cargo
+export PATH=$HOME/.cargo/bin:$PATH
+EOF
+fi
+
+# --------------------------------------
+# Expo alias (devcontainer friendly)
+# --------------------------------------
+echo "⚡ Configuring Expo dev alias..."
+
+ALIAS_LINE="alias expo-dev='bunx expo start --tunnel --port 0'"
+
+if ! grep -Fxq "$ALIAS_LINE" "$HOME/.bashrc"; then
+  echo "$ALIAS_LINE" >> "$HOME/.bashrc"
+  echo "✅ Expo alias added to .bashrc"
+else
+  echo "ℹ️ Expo alias already exists"
+fi
+
+# Reload shell (safe)
+. "$HOME/.bashrc" || true
 
 echo "🏁 Finished $installation_type."

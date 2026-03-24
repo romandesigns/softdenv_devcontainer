@@ -14,14 +14,49 @@
     },
     "ghcr.io/devcontainers/features/python:1": {
       "version": "3.12"
-    }
+    },
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "17"
+    },
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
   },
-  "forwardPorts": [3000],
+  "forwardPorts": [3000, 3001, 5173, 8080, 8081, 8084, 19000, 19001, 19002],
   "portsAttributes": {
     "3000": {
-      "label": "Web",
+      "label": "Web App",
       "onAutoForward": "openBrowser"
+    },
+    "3001": {
+      "label": "Alt Web App"
+    },
+    "5173": {
+      "label": "Vite App",
+      "onAutoForward": "openBrowser"
+    },
+    "8080": {
+      "label": "API"
+    },
+    "8081": {
+      "label": "Admin / Secondary API"
+    },
+    "8084": {
+      "label": "Processor API"
+    },
+    "19000": {
+      "label": "Expo Dev Server"
+    },
+    "19001": {
+      "label": "Expo Metro / LAN"
+    },
+    "19002": {
+      "label": "Expo Dev Tools"
     }
+  },
+  "containerEnv": {
+    "CHOKIDAR_USEPOLLING": "true",
+    "WATCHPACK_POLLING": "true",
+    "EXPO_NO_TELEMETRY": "1",
+    "BROWSER": "none"
   },
   "customizations": {
     "vscode": {
@@ -43,7 +78,19 @@
         "terminal.integrated.fontFamily": "CaskaydiaCove Nerd Font Mono, CaskaydiaCove Nerd Font, monospace",
         "terminal.integrated.fontLigatures.enabled": true,
         "terminal.integrated.fontWeight": "400",
-        "terminal.integrated.gpuAcceleration": "on"
+        "terminal.integrated.gpuAcceleration": "on",
+        "files.watcherExclude": {
+          "**/.git/objects/**": true,
+          "**/.git/subtree-cache/**": true,
+          "**/node_modules/**": true,
+          "**/.next/**": true,
+          "**/dist/**": true,
+          "**/build/**": true,
+          "**/.expo/**": true,
+          "**/android/app/build/**": true,
+          "**/ios/build/**": true,
+          "**/target/**": true
+        }
       },
       "extensions": [
         "ms-azuretools.vscode-containers",
@@ -65,16 +112,22 @@
         "whizkydee.material-palenight-theme",
         "donjayamanne.python-extension-pack",
         "enkia.tokyo-night",
-        "bmewburn.vscode-intelephense-client"
+        "bmewburn.vscode-intelephense-client",
+        "humao.rest-client",
+        "ms-vscode.vscode-typescript-next",
+        "msjsdiag.vscode-react-native",
+        "expo.vscode-expo-tools",
+        "rust-lang.rust-analyzer",
+        "tamasfe.even-better-toml",
+        "tauri-apps.tauri-vscode",
+        "ms-vscode.cpptools"
       ]
     }
   },
   "remoteEnv": {
     "SSH_AUTH_SOCK": "/ssh-agent"
   },
-  "mounts": [
-    "source=/home/softdev/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached"
-  ],
+  "mounts": [],
   "postCreateCommand": "bash .devcontainer/installations.sh",
   "remoteUser": "vscode"
 }
