@@ -1,7 +1,7 @@
 # Ignore project folders inside dev environment
-/desktop/
-/mobile/
-/playground/
-/utils/
-/web/
-/development
+desktop/**
+mobile/**
+playground/**
+utils/**
+web/**
+development/**

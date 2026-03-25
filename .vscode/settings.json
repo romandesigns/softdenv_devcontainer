@@ -1,6 +1,6 @@
 {
   "files.exclude": {
-    ".devcontainer": false,
+    ".devcontainer": true,
     ".github": true,
     ".gitignore": true
   },
