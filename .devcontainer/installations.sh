@@ -229,18 +229,33 @@ EOF
 fi
 
 # --------------------------------------
-# Expo alias (devcontainer friendly)
+# Expo aliases (devcontainer friendly)
 # --------------------------------------
-echo "⚡ Configuring Expo dev alias..."
+echo "⚡ Configuring Expo dev aliases..."
 
-ALIAS_LINE="alias expo-dev='bunx expo start --tunnel --port 0'"
+EXPO_DEV_ALIAS="alias expo-dev='bunx expo start --tunnel --port 0'"
+EXPO_CLEAN_ALIAS="alias expo-clean='pkill -f expo || true; pkill -f metro || true; pkill -f ngrok || true; bunx expo start --tunnel -c'"
 
-if ! grep -Fxq "$ALIAS_LINE" "$HOME/.bashrc"; then
-  echo "$ALIAS_LINE" >> "$HOME/.bashrc"
-  echo "✅ Expo alias added to .bashrc"
+# Add expo-dev alias if not exists
+if ! grep -Fxq "$EXPO_DEV_ALIAS" "$HOME/.bashrc"; then
+  echo "$EXPO_DEV_ALIAS" >> "$HOME/.bashrc"
+  echo "✅ expo-dev alias added"
 else
-  echo "ℹ️ Expo alias already exists"
+  echo "ℹ️ expo-dev alias already exists"
 fi
+
+# Add expo-clean alias if not exists
+if ! grep -Fxq "$EXPO_CLEAN_ALIAS" "$HOME/.bashrc"; then
+  echo "$EXPO_CLEAN_ALIAS" >> "$HOME/.bashrc"
+  echo "✅ expo-clean alias added"
+else
+  echo "ℹ️ expo-clean alias already exists"
+fi
+
+# Reload bashrc so aliases are immediately available
+source "$HOME/.bashrc"
+
+echo "🚀 Expo aliases ready: expo-dev | expo-clean"
 
 # Reload shell (safe)
 . "$HOME/.bashrc" || true

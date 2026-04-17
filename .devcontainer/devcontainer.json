@@ -120,7 +120,16 @@
         "rust-lang.rust-analyzer",
         "tamasfe.even-better-toml",
         "tauri-apps.tauri-vscode",
-        "ms-vscode.cpptools"
+        "ms-vscode.cpptools",
+        "waderyan.gitblame",
+        "usernamehw.errorlens",
+        "MS-vsliveshare.vsliveshare",
+        "pranaygp.vscode-css-peek",
+        "wix.vscode-import-cost",
+        "rangav.vscode-thunder-client",
+        "formulahendry.docker-extension-pack",
+        "christian-kohler.path-intellisense",
+        "Gruntfuggly.todo-tree"
       ]
     }
   },
