@@ -63,7 +63,7 @@
       "settings": {
         "github.copilot.nextEditSuggestions.enabled": true,
         "workbench.iconTheme": "Monokai Pro (Filter Machine) Icons",
-        "workbench.colorTheme": "Bearded Theme Anthracite",
+        "workbench.colorTheme": "Bearded Theme Stained Blue",
         "editor.formatOnPaste": true,
         "editor.formatOnSave": true,
         "editor.defaultFormatter": "esbenp.prettier-vscode",
